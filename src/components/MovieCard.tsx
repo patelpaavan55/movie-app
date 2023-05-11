@@ -1,5 +1,6 @@
 import { Movie } from '@/pages/types'
 import { useState, FC, useEffect, EventHandler } from 'react'
+import Image from 'next/image'
 
 type MovieProps = {
   movie: Movie
@@ -41,7 +42,7 @@ export const MovieCard: FC<MovieProps> = ({ movie, onMovieClick }) => {
 
   return (
     <div className='movie-card' onClick={() => onMovieClick(movie)}>
-      <img
+      <Image
         src={`${BASE_IMG_URL}${movie.poster_path}`}
         alt={`${movie.title} poster`}
         width={200}
