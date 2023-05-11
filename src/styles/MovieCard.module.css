@@ -1,0 +1,44 @@
+.movieCard {
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.movieCard img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.titleContainer {
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bottomContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.favoriteButton {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 20px;
+    outline: none;
+}
+
+.favoriteButton.red {
+    color: red;
+}
+
+.favoriteButton.gray {
+    color: gray;
+}

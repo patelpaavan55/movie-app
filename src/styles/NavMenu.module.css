@@ -1,0 +1,23 @@
+.nav-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #20232a;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem;
+    margin-right: 1rem;
+}
+
+.nav-menu a:hover {
+    color: #61dafb;
+}
+
+.nav-menu a.active {
+    font-weight: bold;
+    border-bottom: 2px solid #61dafb;
+}

@@ -1,0 +1,33 @@
+.movie-details {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.movie-details .content {
+    flex: 1;
+    margin-left: 20px;
+}
+
+.movie-details h1 {
+    margin-bottom: 10px;
+}
+
+.movie-details p {
+    margin-bottom: 20px;
+}
+
+.movie-details p.italic {
+    font-style: italic;
+}
+
+.movie-details p.bold {
+    font-weight: bold;
+}
+
+.movie-details img {
+    border-radius: 10px;
+}

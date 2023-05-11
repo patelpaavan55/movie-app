@@ -1,18 +1,28 @@
-import React, { FC } from 'react'
 import Link from 'next/link'
-import { Favorites } from './Favorites'
+import { useRouter } from 'next/router'
+import styles from '@/styles/NavMenu.module.css'
 
-export const NavMenu: FC = () => {
-  return (
-    <nav>
-      <ul>
-        <li>
-          <Link href={'/'}>Home</Link>
-        </li>
-        <li>
-          <Link href={'/favorites'}>Favorites</Link>
-        </li>
-      </ul>
-    </nav>
-  )
+const NavMenu = () => {
+    const router = useRouter()
+
+    return (
+        <nav className={styles['nav-menu']}>
+            <Link
+                href="/"
+                className={router.pathname === '/' ? styles.active : ''}
+            >
+                Home
+            </Link>
+            <Link
+                href="/favorites"
+                className={
+                    router.pathname === '/favorites' ? styles.active : ''
+                }
+            >
+                Favorites
+            </Link>
+        </nav>
+    )
 }
+
+export default NavMenu
