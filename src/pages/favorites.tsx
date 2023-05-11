@@ -5,11 +5,13 @@ import { useState, useEffect } from 'react'
 import styles from '@/styles/favorites.module.css'
 import Head from 'next/head'
 
+export const LOCAL_STORAGE_FAVORITES_KEY = 'favorite.movies.from.tmdb.api'
+
 const Favorites = () => {
     const [favorites, setFavorites] = useState<Array<Movie>>([])
 
     useEffect(() => {
-        const getFavorites = localStorage.getItem('favorites')
+        const getFavorites = localStorage.getItem(LOCAL_STORAGE_FAVORITES_KEY)
         if (getFavorites) {
             setFavorites(JSON.parse(getFavorites))
         }
@@ -20,7 +22,10 @@ const Favorites = () => {
             (movie: Movie) => movie.id !== movieId
         )
         setFavorites(updatedFavorites)
-        localStorage.setItem('favorites', JSON.stringify(updatedFavorites))
+        localStorage.setItem(
+            LOCAL_STORAGE_FAVORITES_KEY,
+            JSON.stringify(updatedFavorites)
+        )
     }
 
     return (

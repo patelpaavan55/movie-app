@@ -5,6 +5,7 @@ import Link from 'next/link'
 import styles from '@/styles/MovieCard.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import { LOCAL_STORAGE_FAVORITES_KEY } from '@/pages/favorites'
 
 type MovieProps = {
     movie: Movie
@@ -17,32 +18,45 @@ export const MovieCard: FC<MovieProps> = ({ movie, removeFromFavorites }) => {
     const [isFavorite, setIsFavorite] = useState<boolean>(false)
 
     useEffect(() => {
-        const storedFavorites = localStorage.getItem('favorites')
+        const storedFavorites = localStorage.getItem(
+            LOCAL_STORAGE_FAVORITES_KEY
+        )
         if (storedFavorites) {
             const favorites = JSON.parse(storedFavorites)
-            const isFav = favorites.some(
-                (favMovie: Movie) => favMovie.id === movie.id
-            )
-            setIsFavorite(isFav)
+            if (Array.isArray(favorites)) {
+                const isFav = favorites.some(
+                    (favMovie: Movie) => favMovie.id === movie.id
+                )
+                setIsFavorite(isFav)
+            }
         }
     }, [movie.id])
 
     const handleFavoriteClick = (e: React.MouseEvent<HTMLElement>) => {
         e.stopPropagation()
-        const storedFavorites = localStorage.getItem('favorites') || '[]'
+        const storedFavorites =
+            localStorage.getItem(LOCAL_STORAGE_FAVORITES_KEY) || '[]'
         const favorites = JSON.parse(storedFavorites)
 
-        if (isFavorite) {
-            const updatedFavorites = favorites.filter(
-                (favMovie: Movie) => favMovie.id !== movie.id
-            )
-            localStorage.setItem('favorites', JSON.stringify(updatedFavorites))
-            if (removeFromFavorites) {
-                removeFromFavorites(movie.id)
+        if (Array.isArray(favorites)) {
+            if (isFavorite) {
+                const updatedFavorites = favorites.filter(
+                    (favMovie: Movie) => favMovie.id !== movie.id
+                )
+                localStorage.setItem(
+                    LOCAL_STORAGE_FAVORITES_KEY,
+                    JSON.stringify(updatedFavorites)
+                )
+                if (removeFromFavorites) {
+                    removeFromFavorites(movie.id)
+                }
+            } else {
+                favorites.push(movie)
+                localStorage.setItem(
+                    LOCAL_STORAGE_FAVORITES_KEY,
+                    JSON.stringify(favorites)
+                )
             }
-        } else {
-            favorites.push(movie)
-            localStorage.setItem('favorites', JSON.stringify(favorites))
         }
         setIsFavorite((prevFavorite) => !prevFavorite)
     }
