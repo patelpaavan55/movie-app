@@ -12,6 +12,8 @@ type MovieProps = {
 }
 
 export const MovieCard: FC<MovieProps> = ({ movie, removeFromFavorites }) => {
+    const BASE_IMG_URL = `https://image.tmdb.org/t/p/w500`
+
     const [isFavorite, setIsFavorite] = useState<boolean>(false)
 
     useEffect(() => {
@@ -44,8 +46,6 @@ export const MovieCard: FC<MovieProps> = ({ movie, removeFromFavorites }) => {
         }
         setIsFavorite((prevFavorite) => !prevFavorite)
     }
-
-    const BASE_IMG_URL = `https://image.tmdb.org/t/p/w500`
 
     return (
         <div className={styles.movieCard}>
