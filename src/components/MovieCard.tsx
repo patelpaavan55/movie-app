@@ -1,13 +1,14 @@
 import { Movie } from '@/pages/types'
 import { useState, FC, useEffect, EventHandler } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 type MovieProps = {
   movie: Movie
-  onMovieClick: Function
+  removeFromFavorites?: (movieId: number) => void
 }
 
-export const MovieCard: FC<MovieProps> = ({ movie, onMovieClick }) => {
+export const MovieCard: FC<MovieProps> = ({ movie, removeFromFavorites }) => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false)
 
   useEffect(() => {
@@ -31,6 +32,9 @@ export const MovieCard: FC<MovieProps> = ({ movie, onMovieClick }) => {
         (favMovie: Movie) => favMovie.id !== movie.id
       )
       localStorage.setItem('favorites', JSON.stringify(updatedFavorites))
+      if (removeFromFavorites) {
+        removeFromFavorites(movie.id)
+      }
     } else {
       favorites.push(movie)
       localStorage.setItem('favorites', JSON.stringify(favorites))
@@ -41,15 +45,19 @@ export const MovieCard: FC<MovieProps> = ({ movie, onMovieClick }) => {
   const BASE_IMG_URL = `https://image.tmdb.org/t/p/w500`
 
   return (
-    <div className='movie-card' onClick={() => onMovieClick(movie)}>
-      <Image
-        src={`${BASE_IMG_URL}${movie.poster_path}`}
-        alt={`${movie.title} poster`}
-        width={200}
-        height={300}
-      />
-      <h2>{movie.title}</h2>
-      <p>Release Date: {movie.release_date}</p>
+    <div className='movie-card'>
+      <Link href='/movie/[id]' as={`movie/${movie.id}`}>
+        {movie.poster_path && (
+          <Image
+            src={`${BASE_IMG_URL}${movie.poster_path}`}
+            alt={`${movie.title} poster`}
+            width={200}
+            height={300}
+          />
+        )}
+        <h2>{movie.title}</h2>
+        <p>Release Date: {movie.release_date}</p>
+      </Link>
       <button onClick={handleFavoriteClick}>
         {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
       </button>

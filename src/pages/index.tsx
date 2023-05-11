@@ -11,7 +11,7 @@ import { Favorites } from '@/components/Favorites'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const API_KEY = '1b4464d6bc39c8ec20570825347f6cb0'
+export const API_KEY = '1b4464d6bc39c8ec20570825347f6cb0'
 
 const getPopulatedMovies = async () => {
   const response = await axios.get<ApiResponse>(
@@ -28,9 +28,9 @@ export default function Home() {
     getPopulatedMovies().then(setMovies)
   }, [])
 
-  const handleMovieClick = (movie: Movie) => {
-    setSelectedMovie(movie)
-  }
+  // const handleMovieClick = (movie: Movie) => {
+  //   setSelectedMovie(movie)
+  // }
 
   return (
     <>
@@ -47,15 +47,11 @@ export default function Home() {
         <h1>Popular Movies</h1>
         <div className='movie-list'>
           {movies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
-              onMovieClick={handleMovieClick}
-            />
+            <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>
-        {selectedMovie && <MovieDetails movie={selectedMovie} />}
-        <Favorites />
+        {/* {selectedMovie && <MovieDetails movie={selectedMovie} />}
+        <Favorites /> */}
       </div>
     </>
   )

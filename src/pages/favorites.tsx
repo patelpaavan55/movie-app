@@ -1,7 +1,9 @@
-import { Movie } from '@/pages/types'
+import React from 'react'
+import { MovieCard } from '@/components/MovieCard'
+import { Movie } from './types'
 import { useState, useEffect } from 'react'
 
-export const Favorites = () => {
+const Favorites = () => {
   const [favorites, setFavorites] = useState<Array<Movie>>([])
 
   useEffect(() => {
@@ -21,15 +23,18 @@ export const Favorites = () => {
 
   return (
     <div className='favorites'>
-      <h2>My Favorites</h2>
-      {favorites.map((movie: Movie) => (
-        <div key={movie.id}>
-          <h3>{movie.title}</h3>
-          <button onClick={() => removeFromFavorites(movie.id)}>
-            Remove from favorites
-          </button>
-        </div>
-      ))}
+      <h1>My Favorites</h1>
+      <div className='movie-list'>
+        {favorites.map((movie: Movie) => (
+          <MovieCard
+            key={movie.id}
+            movie={movie}
+            removeFromFavorites={removeFromFavorites}
+          />
+        ))}
+      </div>
     </div>
   )
 }
+
+export default Favorites
