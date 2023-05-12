@@ -1,5 +1,5 @@
 import { Movie } from '@/pages/types'
-import { useState, FC, useEffect } from 'react'
+import { useState, FC, useEffect, CSSProperties } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from '@/styles/MovieCard.module.css'
@@ -10,9 +10,14 @@ import { LOCAL_STORAGE_FAVORITES_KEY } from '@/pages/favorites'
 type MovieProps = {
     movie: Movie
     removeFromFavorites?: (movieId: number) => void
+    style?: CSSProperties
 }
 
-export const MovieCard: FC<MovieProps> = ({ movie, removeFromFavorites }) => {
+export const MovieCard: FC<MovieProps> = ({
+    movie,
+    removeFromFavorites,
+    style,
+}) => {
     const BASE_IMG_URL = `https://image.tmdb.org/t/p/w500`
 
     const [isFavorite, setIsFavorite] = useState<boolean>(false)
@@ -62,7 +67,7 @@ export const MovieCard: FC<MovieProps> = ({ movie, removeFromFavorites }) => {
     }
 
     return (
-        <div className={styles.movieCard}>
+        <div className={styles.movieCard} style={style}>
             <Link href="/movie/[id]" as={`movie/${movie.id}`}>
                 {movie.poster_path && (
                     <Image
@@ -77,7 +82,7 @@ export const MovieCard: FC<MovieProps> = ({ movie, removeFromFavorites }) => {
                 </div>
             </Link>
             <div className={styles.bottomContainer}>
-                <p>Release Date: {movie.release_date}</p>
+                <p>Release On: {movie.release_date}</p>
                 <button
                     className={`${styles.favoriteButton} ${
                         isFavorite ? styles.red : styles.gray

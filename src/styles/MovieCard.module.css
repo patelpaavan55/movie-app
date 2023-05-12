@@ -1,9 +1,10 @@
 .movieCard {
     background-color: #ffffff;
     border-radius: 5px;
-    padding: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .movieCard img {
@@ -18,11 +19,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .bottomContainer {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     margin-top: 8px;
 }
