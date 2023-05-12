@@ -5,18 +5,41 @@ import { MovieCard } from '@/components/MovieCard'
 import { API_KEY } from '@/pages/index'
 import styles from '@/styles/PopularMovies.module.css'
 
-const getPopulatedMovies = async () => {
+const getPopulatedMovies = async (pageNum: number) => {
     const response = await axios.get<ApiResponse>(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`
+        `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNum}`
     )
     return response.data.results
 }
 
 export const PopularMovies = () => {
+    const [page, setPage] = useState(1)
     const [movies, setMovies] = useState<Array<Movie>>([])
 
     useEffect(() => {
-        getPopulatedMovies().then(setMovies)
+        getPopulatedMovies(page).then((newMovies) =>
+            setMovies((prevMovies) => [...prevMovies, ...newMovies])
+        )
+    }, [page])
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop =
+                document.documentElement.scrollTop || document.body.scrollTop
+            const scrollHeight =
+                document.documentElement.scrollHeight ||
+                document.body.scrollHeight
+
+            if (scrollTop + window.innerHeight >= scrollHeight - 200) {
+                setPage((prevPage) => prevPage + 1)
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll)
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
     }, [])
 
     return (
